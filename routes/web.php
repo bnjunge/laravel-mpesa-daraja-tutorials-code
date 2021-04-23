@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\payments\mpesa\MPESAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('get-token', [MPESAController::class, 'getAccessToken']);
+Route::post('register-urls', [MPESAController::class, 'registerURLS']);
+Route::post('simulate', [MPESAController::class, 'simulateTransaction']);
