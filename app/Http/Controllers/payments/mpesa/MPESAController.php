@@ -26,6 +26,7 @@ class MPESAController extends Controller
         $response = json_decode(curl_exec($curl));
         curl_close($curl);
 
+        // return $response;
         return $response->access_token;
     }
 
@@ -40,13 +41,35 @@ class MPESAController extends Controller
             'ValidationURL' => env('MPESA_TEST_URL') . '/api/validation'
         );
 
-        $url = env('MPESA_ENV') == 0
-        ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl'
-        : 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
-
+        $url = '/c2b/v1/registerurl';
         $response = $this->makeHttp($url, $body);
 
         return $response;
+    }
+
+    public function stkPush(Request $request){
+        $timestamp = date('YmdHis');
+        $password = env('MPESA_STK_SHORTCODE').env('MPESA_PASSKEY').$timestamp;
+
+        $curl_post_data = array(
+            'BusinessShortCode' => env('MPESA_STK_SHORTCODE'),
+            'Password' => $password,
+            'Timestamp' => $timestamp,
+            'TransactionType' => 'CustomerPayBillOnline',
+            'Amount' => $request->amount,
+            'PartyA' => $request->phone,
+            'PartyB' => env('MPESA_STK_SHORTCODE'),
+            'PhoneNumber' => $request->phone,
+            'CallBackURL' => env('MPESA_TEST_URL'). '/api/stkpush',
+            'AccountReference' => $request->account,
+            'TransactionDesc' => $request->account
+          );
+
+          $url = '/stkpush/v1/processrequest';
+
+          $response = $this->makeHttp($url, $curl_post_data);
+
+          return $response;
     }
 
     /**
@@ -61,10 +84,7 @@ class MPESAController extends Controller
             'CommandID' => 'CustomerPayBillOnline'
         );
 
-        $url = env('MPESA_ENV') == 0
-        ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate'
-        : 'https://api.safaricom.co.ke/mpesa/c2b/v1/simulate';
-
+        $url =  '/c2b/v1/simulate';
         $response = $this->makeHttp($url, $body);
 
         return $response;
@@ -72,6 +92,7 @@ class MPESAController extends Controller
 
     public function makeHttp($url, $body)
     {  
+        $url = 'https://sandbox.safaricom.co.ke/mpesa/' . $url;
         $curl = curl_init();
         curl_setopt_array(
             $curl,

@@ -19,9 +19,14 @@ class MPESAResponsesController extends Controller
         ];
     }
 
+    public function stkPush(Request $request){
+        Log::info('STK Push endpoint hit');
+        Log::info($request->all());
+    }
 
     public function confirmation(Request $request){
         Log::info('Confirmation endpoint hit');
         Log::info($request->all());
     }
+
 }

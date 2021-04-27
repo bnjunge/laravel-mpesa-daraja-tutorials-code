@@ -12,6 +12,10 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'stk/*'
+    ];
+
+    protected $except_urls = [
+        'stk/*'
     ];
 }
