@@ -28,6 +28,7 @@ class MPESAResponsesController extends Controller
             'ThirdPartyTransID' => rand(3000, 10000)
         ];
     }
+    
 
     public function B2CCallback(Request $request){
         Log::info('B2C Push endpoint hit');
