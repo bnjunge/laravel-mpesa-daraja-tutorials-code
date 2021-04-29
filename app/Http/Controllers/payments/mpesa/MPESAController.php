@@ -90,9 +90,29 @@ class MPESAController extends Controller
         return $response;
     }
 
+    public function simulateB2C(Request $request){
+        $curl_post_data = array(
+            'InitiatorName' => env('MPESA_B2C_INITIATOR'),
+            'SecurityCredential' => env('MPESA_B2C_PASSOWRD'),
+            'CommandID' => 'SalaryPayment',
+            'Amount' => $request->amount,
+            'PartyA' => env('MPESA_SHORTCODE'),
+            'PartyB' => $request->phone,
+            'Remarks' => $request->remarks,
+            'QueueTimeOutURL' => env('MPESA_TEST_URL'). '/api/b2ctimeout',
+            'ResultURL' => env('MPESA_TEST_URL'). '/api/b2cresult',
+            'Occasion' => $request->occasion
+          );
+
+          $data = $this->makeHttp('/b2c/v1/paymentrequest', $curl_post_data);
+
+          return $data;
+    }
+
     public function makeHttp($url, $body)
     {  
-        $url = 'https://sandbox.safaricom.co.ke/mpesa/' . $url;
+        $url = 'https://mpesa-reflector.herokuapp.com' . $url;
+        // $url = 'https://sandbox.safaricom.co.ke/mpesa/' . $url;
         $curl = curl_init();
         curl_setopt_array(
             $curl,
