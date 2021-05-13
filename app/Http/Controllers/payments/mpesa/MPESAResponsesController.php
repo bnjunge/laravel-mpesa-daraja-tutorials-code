@@ -29,9 +29,8 @@ class MPESAResponsesController extends Controller
         ];
     }
     
-
-    public function B2CCallback(Request $request){
-        Log::info('B2C Push endpoint hit');
+    public function b2cCallback(Request $request){
+        Log::info('B2C endpoint hit');
         Log::info($request->all());
         return [
             'ResultCode' => 0,
@@ -39,6 +38,27 @@ class MPESAResponsesController extends Controller
             'ThirdPartyTransID' => rand(3000, 10000)
         ];
     }
+
+    public function transactionStatusResponse(Request $request){
+        Log::info('transactionStatusResponse  endpoint hit');
+        Log::info($request->all());
+        return [
+            'ResultCode' => 0,
+            'ResultDesc' => 'Accept Service',
+            'ThirdPartyTransID' => rand(3000, 10000)
+        ];
+    }
+
+    public function transactionReversal(Request $request){
+        Log::info('transactionReversal  endpoint hit');
+        Log::info($request->all());
+        return [
+            'ResultCode' => 0,
+            'ResultDesc' => 'Accept Service',
+            'ThirdPartyTransID' => rand(3000, 10000)
+        ];
+    }
+
 
     public function confirmation(Request $request){
         Log::info('Confirmation endpoint hit');

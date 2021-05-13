@@ -53,5 +53,27 @@
         </div>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        document.getElementById('simulate').addEventListener('click', (event) => {
+            event.preventDefault()
+
+            const requestBody = {
+                amount: document.getElementById('amount').value,
+                account: document.getElementById('account').value
+            }
+
+            axios.post('/simulate', requestBody)
+            .then((response) => {
+                if(response.data.ResponseDescription){
+                    document.getElementById('c2b_response').innerHTML = response.data.ResponseDescription
+                } else {
+                    document.getElementById('c2b_response').innerHTML = response.data.errorMessage
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        })
+    </script>
 </body>
 </html>

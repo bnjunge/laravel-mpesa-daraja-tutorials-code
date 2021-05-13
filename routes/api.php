@@ -9,4 +9,6 @@ use App\Http\Controllers\payments\mpesa\MPESAResponsesController;
 Route::post('validation', [MPESAResponsesController::class, 'validation']);
 Route::post('confirmation', [MPESAResponsesController::class, 'confirmation']);
 Route::post('stkpush', [MPESAResponsesController::class, 'stkPush']);
-Route::post('b2cresult', [MPESAResponsesController::class, 'B2CCallback']);
+Route::post('b2ccallback', [MPESAResponsesController::class, 'b2cCallback']);
+Route::post('transaction-status/result_url', [MPESAResponsesController::class, 'transactionStatusResponse']);
+Route::post('reversal/result_url', [MPESAResponsesController::class, 'transactionReversal']);

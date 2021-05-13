@@ -35,26 +35,6 @@ require('./bootstrap');
 // });
 
 
-// document.getElementById('simulate').addEventListener('click', (event) => {
-//     event.preventDefault()
-
-//     const requestBody = {
-//         amount: document.getElementById('amount').value,
-//         account: document.getElementById('account').value
-//     }
-
-//     axios.post('/simulate', requestBody)
-//     .then((response) => {
-//         if(response.data.ResponseDescription){
-//             document.getElementById('c2b_response').innerHTML = response.data.ResponseDescription
-//         } else {
-//             document.getElementById('c2b_response').innerHTML = response.data.errorMessage
-//         }
-//     })
-//     .catch((error) => {
-//         console.log(error);
-//     })
-// })
 
 // document.getElementById('stkpush').addEventListener('click', (event) => {
 //     event.preventDefault()
@@ -78,20 +58,61 @@ require('./bootstrap');
 //     })
 // })
 
-document.getElementById('simulateb2c').addEventListener('click', (event) => {
+
+// document.getElementById('b2csimulate').addEventListener('click', (event) => {
+//     event.preventDefault()
+
+//     const requestBody = {
+//         amount: document.getElementById('amount').value,
+//         occasion: document.getElementById('occasion').value,
+//         remarks: document.getElementById('remarks').value,
+//         phone: document.getElementById('phone').value
+//     }
+
+//     axios.post('simulateb2c', requestBody)
+//     .then((response) => {
+//         if(response.data.Result){
+//             document.getElementById('c2b_response').innerHTML = response.data.Result.ResultDesc
+//         } else {
+//             document.getElementById('c2b_response').innerHTML = response.data.errorMessage
+//         }
+//     })
+//     .catch((error) => {
+//         console.log(error);
+//     })
+// })
+
+// document.getElementById('status').addEventListener('click', (event) => {
+//     event.preventDefault()
+
+//     const requestBody = {
+//         transactionid: document.getElementById('transactionid').value
+//     }
+
+//     axios.post('check-status', requestBody)
+//     .then((response) => {
+//         if(response.data.Result){
+//             document.getElementById('c2b_response').innerHTML = response.data.Result.ResultDesc
+//         } else {
+//             document.getElementById('c2b_response').innerHTML = response.data.errorMessage
+//         }
+//     })
+//     .catch((error) => {
+//         console.log(error);
+//     })
+// })
+document.getElementById('reverse').addEventListener('click', (event) => {
     event.preventDefault()
 
     const requestBody = {
+        transactionid: document.getElementById('transactionid').value,
         amount: document.getElementById('amount').value,
-        phone: document.getElementById('phone').value,
-        occasion: document.getElementById('occasion').value,
-        remarks: document.getElementById('remarks').value
     }
 
-    axios.post('/simulateb2c', requestBody)
+    axios.post('reversal', requestBody)
     .then((response) => {
-        if(response.data.Result){
-            document.getElementById('c2b_response').innerHTML = response.data.Result.ResultDesc
+        if(response.data){
+            document.getElementById('c2b_response').innerHTML = response.data.ResultDescription
         } else {
             document.getElementById('c2b_response').innerHTML = response.data.errorMessage
         }
